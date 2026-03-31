@@ -1,5 +1,4 @@
-export class Servidores {
-    id: number;
+export class ServidoresResponseDto {
     nomeCompleto: string;
     matricula: string;
     cpf: string;
@@ -7,8 +6,4 @@ export class Servidores {
     equipe: string;
     status: boolean;
     cargaHoraria: number;
-    criadoQuando: Date;
-    criadoPor?: string;
-    atualizadoQuando?: Date;
-    atualizadoPor?: string;
 }

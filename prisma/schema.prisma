@@ -14,7 +14,7 @@ datasource db {
 }
 
 model Usuarios {
-  id BigInt @default(autoincrement()) @id
+  id Int @default(autoincrement()) @id
   nomeCompleto String
   email String @unique
   senha String
@@ -22,13 +22,13 @@ model Usuarios {
   refreshToken  String?
   status Boolean @default(true)
   criadoQuando DateTime @default(now())
-  criadoPor String
-  atualizadoQuando DateTime @updatedAt
-  atualizadoPor String
+  criadoPor String?
+  atualizadoQuando DateTime?
+  atualizadoPor String?
 }
 
 model Servidores {
-  id BigInt @default(autoincrement()) @id
+  id Int @default(autoincrement()) @id
   nomeCompleto String
   matricula String @unique
   cpf String @unique
@@ -37,35 +37,36 @@ model Servidores {
   status Boolean @default(true)
   cargaHoraria Int
   criadoQuando DateTime @default(now())
-  criadoPor String
-  atualizadoQuando DateTime @updatedAt
-  atualizadoPor String
+  criadoPor String?
+  atualizadoQuando DateTime? @updatedAt
+  atualizadoPor String?
 }
 
 model Equipes {
-  id BigInt @default(autoincrement()) @id
+  id Int @default(autoincrement()) @id
   nomeEquipe String
   descricao String
   codigoVtr String
   cor String
   status Boolean @default(true)
+  servidoresId Json @default("[]")
   criadoQuando DateTime @default(now())
-  criadoPor String
-  atualizadoQuando DateTime @updatedAt
-  atualizadoPor String
+  criadoPor String?
+  atualizadoQuando DateTime? @updatedAt
+  atualizadoPor String?
 }
 
 model Afastamentos {
-  id BigInt @default(autoincrement()) @id
-  servidorId BigInt
+  id Int @default(autoincrement()) @id
+  servidorId Int
   tipoAfastamento String
   dataInicio DateTime
   dataFim DateTime
   motivo String
   status Boolean @default(true)
   criadoQuando DateTime @default(now())
-  criadoPor String
+  criadoPor String?
   atualizadoQuando DateTime @updatedAt
-  atualizadoPor String
+  atualizadoPor String?
   @@index([servidorId])
 }

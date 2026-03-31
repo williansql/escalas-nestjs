@@ -1,6 +1,6 @@
 -- CreateTable
 CREATE TABLE "Usuarios" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "nomeCompleto" TEXT NOT NULL,
     "email" TEXT NOT NULL,
     "senha" TEXT NOT NULL,
@@ -8,14 +8,14 @@ CREATE TABLE "Usuarios" (
     "refreshToken" TEXT,
     "status" BOOLEAN NOT NULL DEFAULT true,
     "criadoQuando" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "criadoPor" TEXT NOT NULL,
-    "atualizadoQuando" DATETIME NOT NULL,
-    "atualizadoPor" TEXT NOT NULL
+    "criadoPor" TEXT,
+    "atualizadoQuando" DATETIME,
+    "atualizadoPor" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Servidores" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "nomeCompleto" TEXT NOT NULL,
     "matricula" TEXT NOT NULL,
     "cpf" TEXT NOT NULL,
@@ -24,38 +24,38 @@ CREATE TABLE "Servidores" (
     "status" BOOLEAN NOT NULL DEFAULT true,
     "cargaHoraria" INTEGER NOT NULL,
     "criadoQuando" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "criadoPor" TEXT NOT NULL,
-    "atualizadoQuando" DATETIME NOT NULL,
-    "atualizadoPor" TEXT NOT NULL
+    "criadoPor" TEXT,
+    "atualizadoQuando" DATETIME,
+    "atualizadoPor" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Equipes" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
     "nomeEquipe" TEXT NOT NULL,
     "descricao" TEXT NOT NULL,
     "codigoVtr" TEXT NOT NULL,
     "cor" TEXT NOT NULL,
     "status" BOOLEAN NOT NULL DEFAULT true,
     "criadoQuando" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "criadoPor" TEXT NOT NULL,
-    "atualizadoQuando" DATETIME NOT NULL,
-    "atualizadoPor" TEXT NOT NULL
+    "criadoPor" TEXT,
+    "atualizadoQuando" DATETIME,
+    "atualizadoPor" TEXT
 );
 
 -- CreateTable
 CREATE TABLE "Afastamentos" (
-    "id" BIGINT NOT NULL PRIMARY KEY,
-    "servidorId" BIGINT NOT NULL,
+    "id" INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
+    "servidorId" INTEGER NOT NULL,
     "tipoAfastamento" TEXT NOT NULL,
     "dataInicio" DATETIME NOT NULL,
     "dataFim" DATETIME NOT NULL,
     "motivo" TEXT NOT NULL,
     "status" BOOLEAN NOT NULL DEFAULT true,
     "criadoQuando" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
-    "criadoPor" TEXT NOT NULL,
+    "criadoPor" TEXT,
     "atualizadoQuando" DATETIME NOT NULL,
-    "atualizadoPor" TEXT NOT NULL
+    "atualizadoPor" TEXT
 );
 
 -- CreateIndex

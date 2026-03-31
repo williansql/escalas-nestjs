@@ -2,7 +2,8 @@ import { HttpException, HttpStatus, Injectable } from '@nestjs/common';
 import { PrismaService } from 'src/prisma/prisma.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
-import { PrismaClientKnownRequestError } from 'generated/prisma/internal/prismaNamespace';
+import { PrismaClientKnownRequestError } from '@prisma/client/runtime/client';
+import * as bcrypt from 'bcrypt';
 
 @Injectable()
 export class UsuariosService {
@@ -16,13 +17,20 @@ export class UsuariosService {
     if (existeEmail) {
       throw new HttpException('Email já cadastrado', HttpStatus.CONFLICT);
     }
+
+
     return this.prisma.usuarios.create({
-      data: { ...createUsuarioDto },
+      data: {
+        nomeCompleto: createUsuarioDto.nomeCompleto,
+        email: createUsuarioDto.email,
+        senha: await this.hashPassword(createUsuarioDto.senha),
+        role: createUsuarioDto.role || 'USER',
+      }
     });
   }
 
-  findAll() {
-    return this.prisma.usuarios.findMany();
+  async findAll() {
+    return await this.prisma.usuarios.findMany();
   }
 
   async findOne(id: number) {
@@ -35,7 +43,7 @@ export class UsuariosService {
     return buscarUsuario;
   }
 
-  findByEmail(email: string) {
+  async findByEmail(email: string) {
     return this.prisma.usuarios.findUnique({
       where: { email },
     });
@@ -50,7 +58,11 @@ export class UsuariosService {
     }
     return this.prisma.usuarios.update({
       where: { id },
-      data: { ...updateUsuarioDto },
+      data: { 
+        nomeCompleto: updateUsuarioDto.nomeCompleto,
+        email: updateUsuarioDto.email,
+        role: updateUsuarioDto.role,
+       },
     });
   }
 

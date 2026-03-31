@@ -1,4 +1,4 @@
-export class Servidores {
+export class CreateServidoresDto {
     id: number;
     nomeCompleto: string;
     matricula: string;
