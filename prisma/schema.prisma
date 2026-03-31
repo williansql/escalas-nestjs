@@ -1,0 +1,71 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+  moduleFormat    = "cjs"
+}
+
+datasource db {
+  provider = "sqlite"
+}
+
+model Usuarios {
+  id BigInt @default(autoincrement()) @id
+  nomeCompleto String
+  email String @unique
+  senha String
+  role          String  @default("USER")
+  refreshToken  String?
+  status Boolean @default(true)
+  criadoQuando DateTime @default(now())
+  criadoPor String
+  atualizadoQuando DateTime @updatedAt
+  atualizadoPor String
+}
+
+model Servidores {
+  id BigInt @default(autoincrement()) @id
+  nomeCompleto String
+  matricula String @unique
+  cpf String @unique
+  funcao String
+  equipe String
+  status Boolean @default(true)
+  cargaHoraria Int
+  criadoQuando DateTime @default(now())
+  criadoPor String
+  atualizadoQuando DateTime @updatedAt
+  atualizadoPor String
+}
+
+model Equipes {
+  id BigInt @default(autoincrement()) @id
+  nomeEquipe String
+  descricao String
+  codigoVtr String
+  cor String
+  status Boolean @default(true)
+  criadoQuando DateTime @default(now())
+  criadoPor String
+  atualizadoQuando DateTime @updatedAt
+  atualizadoPor String
+}
+
+model Afastamentos {
+  id BigInt @default(autoincrement()) @id
+  servidorId BigInt
+  tipoAfastamento String
+  dataInicio DateTime
+  dataFim DateTime
+  motivo String
+  status Boolean @default(true)
+  criadoQuando DateTime @default(now())
+  criadoPor String
+  atualizadoQuando DateTime @updatedAt
+  atualizadoPor String
+  @@index([servidorId])
+}
