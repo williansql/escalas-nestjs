@@ -4,7 +4,7 @@ export class Servidores {
     matricula: string;
     cpf: string;
     funcao: string;
-    equipe: string;
+    equipeId?: number;
     status: boolean;
     cargaHoraria: number;
     criadoQuando: Date;

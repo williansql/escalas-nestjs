@@ -1,4 +1,3 @@
-import { ServidoresResponseDto } from "src/features/servidores/dto/servidores-response.dto";
 
 export class CreateEquipeDto {
   nomeEquipe: string;
@@ -6,7 +5,9 @@ export class CreateEquipeDto {
   codigoVtr: string;
   cor: string;
   status?: boolean;
-  servidores?: ServidoresResponseDto[];
+  servidores: [
+    { id: number }
+  ];
   criadoQuando?: Date;
   criadoPor?: string;
   atualizadoQuando?: Date;

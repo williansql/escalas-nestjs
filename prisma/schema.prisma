@@ -33,13 +33,14 @@ model Servidores {
   matricula String @unique
   cpf String @unique
   funcao String
-  equipe String
+  equipeId Int
   status Boolean @default(true)
   cargaHoraria Int
   criadoQuando DateTime @default(now())
   criadoPor String?
   atualizadoQuando DateTime? @updatedAt
   atualizadoPor String?
+  @@index([equipeId])
 }
 
 model Equipes {

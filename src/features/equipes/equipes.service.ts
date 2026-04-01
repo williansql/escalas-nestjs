@@ -16,7 +16,7 @@ export class EquipesService {
         codigoVtr: createEquipeDto.codigoVtr,
         cor: createEquipeDto.cor,
         status: createEquipeDto.status ?? true,
-        servidoresId: createEquipeDto.servidoresId ?? [],
+        servidoresId: createEquipeDto.servidores ?? [],
         criadoQuando: new Date(),
         criadoPor: createEquipeDto.criadoPor,
       },
@@ -24,13 +24,38 @@ export class EquipesService {
   }
 
   async findAll() {
-    return this.prisma.equipes.findMany();
+    const equipes = await this.prisma.equipes.findMany();
+    const allServidoresIds = equipes.flatMap(equipe => equipe.servidoresId as number[] || []);
+    const uniqueServidoresIds = Array.from(new Set(allServidoresIds));
+    const servidores = await this.prisma.servidores.findMany({
+      where: { id: { in: uniqueServidoresIds } },
+    });
+    const servidoresMap = new Map(servidores.map(servidor => [servidor.id, servidor]));
+
+    return equipes.map(equipe => ({
+      ...equipe,
+      servidores: (equipe.servidoresId as number[] || []).map(id => servidoresMap.get(id)).filter(Boolean),
+    }));
   }
 
   async findOne(id: number) {
-    return this.prisma.equipes.findUnique({
+    const equipe = await this.prisma.equipes.findUnique({
       where: { id },
     });
+
+    if (!equipe) {
+      throw new HttpException('Equipe não encontrada', HttpStatus.NOT_FOUND);
+    }
+
+    const servidoresIds = equipe.servidoresId as number[] || [];
+    const servidores = await this.prisma.servidores.findMany({
+      where: { id: { in: servidoresIds } },
+    });
+
+    return {
+      ...equipe,
+      servidores,
+    };
   }
 
   async update(id: number, updateEquipeDto: UpdateEquipeDto) {

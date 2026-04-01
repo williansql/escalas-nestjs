@@ -1,5 +1,9 @@
 export class CreateAfastamentoDto {
-  servidorId: number;
+  id?: number;
+  servidorId?: number;
+  servidor?: {
+    id: number;
+  };
   tipo?: string;
   dataInicio: Date;
   dataFim: Date;

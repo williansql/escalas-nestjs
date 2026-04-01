@@ -1,6 +1,7 @@
 export class Afastamento {
   id: number;
   servidorId: number;
+  servidor?: any;
   tipoAfastamento: string;
   dataInicio: Date;
   dataFim: Date;

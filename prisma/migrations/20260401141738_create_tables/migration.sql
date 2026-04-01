@@ -20,7 +20,7 @@ CREATE TABLE "Servidores" (
     "matricula" TEXT NOT NULL,
     "cpf" TEXT NOT NULL,
     "funcao" TEXT NOT NULL,
-    "equipe" TEXT NOT NULL,
+    "equipeId" INTEGER NOT NULL,
     "status" BOOLEAN NOT NULL DEFAULT true,
     "cargaHoraria" INTEGER NOT NULL,
     "criadoQuando" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -37,6 +37,7 @@ CREATE TABLE "Equipes" (
     "codigoVtr" TEXT NOT NULL,
     "cor" TEXT NOT NULL,
     "status" BOOLEAN NOT NULL DEFAULT true,
+    "servidoresId" JSONB NOT NULL DEFAULT [],
     "criadoQuando" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "criadoPor" TEXT,
     "atualizadoQuando" DATETIME,
@@ -66,6 +67,9 @@ CREATE UNIQUE INDEX "Servidores_matricula_key" ON "Servidores"("matricula");
 
 -- CreateIndex
 CREATE UNIQUE INDEX "Servidores_cpf_key" ON "Servidores"("cpf");
+
+-- CreateIndex
+CREATE INDEX "Servidores_equipeId_idx" ON "Servidores"("equipeId");
 
 -- CreateIndex
 CREATE INDEX "Afastamentos_servidorId_idx" ON "Afastamentos"("servidorId");

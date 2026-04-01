@@ -1,13 +1,16 @@
 export class CreateServidoresDto {
-    id: number;
+    id?: number;
     nomeCompleto: string;
     matricula: string;
     cpf: string;
     funcao: string;
-    equipe: string;
+    equipe?: {
+        id: number;
+    };
     status: boolean;
+    equipeId?: number;
     cargaHoraria: number;
-    criadoQuando: Date;
+    criadoQuando?: Date;
     criadoPor?: string;
     atualizadoQuando?: Date;
     atualizadoPor?: string;
