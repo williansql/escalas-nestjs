@@ -18,14 +18,15 @@ export class UsuariosService {
       throw new HttpException('Email já cadastrado', HttpStatus.CONFLICT);
     }
 
-
     return this.prisma.usuarios.create({
       data: {
         nomeCompleto: createUsuarioDto.nomeCompleto,
         email: createUsuarioDto.email,
         senha: await this.hashPassword(createUsuarioDto.senha),
         role: createUsuarioDto.role || 'USER',
-      }
+        criadoPor: createUsuarioDto.email,
+        
+      },
     });
   }
 
@@ -58,11 +59,11 @@ export class UsuariosService {
     }
     return this.prisma.usuarios.update({
       where: { id },
-      data: { 
+      data: {
         nomeCompleto: updateUsuarioDto.nomeCompleto,
         email: updateUsuarioDto.email,
         role: updateUsuarioDto.role,
-       },
+      },
     });
   }
 

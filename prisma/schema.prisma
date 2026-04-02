@@ -71,3 +71,35 @@ model Afastamentos {
   atualizadoPor String?
   @@index([servidorId])
 }
+
+model EscalaMensal {
+  id               Int            @id @default(autoincrement())
+  mes              Int
+  ano              Int
+  status           String         @default("RASCUNHO") // RASCUNHO | PUBLICADA | ARQUIVADA
+  geradaEm         DateTime?
+  criadoQuando     DateTime       @default(now())
+  criadoPor        String?
+  atualizadoQuando DateTime?      @updatedAt
+  atualizadoPor    String?
+  dias             EscalaDiaria[]
+
+  @@unique([mes, ano])
+}
+
+model EscalaDiaria {
+  id                  Int          @id @default(autoincrement())
+  escalaId            Int
+  escala              EscalaMensal @relation(fields: [escalaId], references: [id], onDelete: Cascade)
+  data                DateTime
+  diaSemana           String
+  equipeId            Int
+  sobreavisoEquipeId  Int?
+  servidoresEscalados Json         @default("[]")
+  observacao          String?
+  criadoQuando        DateTime     @default(now())
+  atualizadoQuando    DateTime?    @updatedAt
+
+  @@index([escalaId])
+  @@index([data])
+}
